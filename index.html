@@ -1,0 +1,259 @@
+<!doctype html>
+<!-- Skala 1.3vh absolut untuk TV 32 inch HD Ready -->
+<html lang="id" class="dark" style="font-size: 1.3vh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signage Masjid Al-Ukhuwah</title>
+    <link rel="stylesheet" href="/src/assets/css/style.css" />
+  </head>
+
+  <!-- h-[100dvh] mencegah terpotongnya UI di Android Box -->
+  <body
+    class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 h-[100dvh] w-screen overflow-hidden flex flex-col font-montserrat transition-colors duration-1000"
+  >
+    <!-- min-h-0 menahan main agar tidak mendorong footer -->
+    <main class="flex-grow grid grid-cols-12 gap-8 p-8 min-h-0">
+      <!-- SISI KIRI: Zona Fokus (8 Kolom) -->
+      <section
+        class="col-span-8 flex flex-col justify-center items-center border-r-2 border-slate-200 dark:border-slate-800 pr-8 relative"
+      >
+        <div class="absolute top-0 left-0 flex items-center gap-4">
+          <!-- PATH DIPERBAIKI. Pastikan logomu sudah format PNG transparan -->
+          <img
+            src="/img/logo.jpeg"
+            alt="Logo Masjid Al-Ukhuwah"
+            class="w-30 h-30 object-cover rounded-full shadow-md border-2 border-slate-200 dark:border-slate-800"
+          />
+          <h1
+            class="text-5xl font-black uppercase tracking-tight leading-none text-slate-800 dark:text-slate-200"
+          >
+            Masjid Al-Ukhuwah<br />
+            <span class="text-masjid-gold text-4xl tracking-widest"
+              >Bonorejo</span
+            >
+          </h1>
+        </div>
+
+        <h2
+          id="clock-display"
+          class="text-[17rem] font-black leading-none tracking-tighter text-slate-900 dark:text-white mt-12 tabular-nums"
+        >
+          00:00:00
+        </h2>
+
+        <p
+          id="date-display"
+          class="text-4xl font-semibold text-slate-700 dark:text-slate-300 mb-12 uppercase tracking-wide"
+        >
+          Memuat Tanggal...
+        </p>
+
+        <!-- Kotak Hitung Mundur -->
+        <div
+          class="bg-white dark:bg-slate-900 rounded-[2rem] p-8 w-full max-w-3xl text-center shadow-lg border border-slate-100 dark:border-slate-800 transition-colors duration-500"
+          id="countdown-container"
+        >
+          <p
+            id="next-prayer-label"
+            class="text-4xl font-bold text-slate-700 dark:text-slate-300 uppercase tracking-widest mb-2"
+          >
+            Menyiapkan Jadwal
+          </p>
+          <p
+            id="countdown-display"
+            class="text-8xl font-mono font-black text-masjid-gold tabular-nums"
+          >
+            --:--:--
+          </p>
+        </div>
+
+        <div class="mt-8 bg-white dark:bg-slate-900 px-10 py-5 rounded-3xl shadow-lg border border-slate-100 dark:border-slate-800 text-center transition-colors duration-500 flex flex-col items-center justify-center">
+            <h4 class="text-[1.75rem] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1">
+                Total Saldo Infaq Masjid
+            </h4>
+            <p id="saldo-infaq" class="text-5xl font-black text-masjid-gold tracking-tight">
+                Memuat data...
+            </p>
+        </div>
+      </section>
+
+      <!-- SISI KANAN: Zona Referensi (4 Kolom) -->
+      <section class="col-span-4 flex flex-col gap-5 h-full py-2">
+        <!-- KOTAK 1: JADWAL SHOLAT -->
+        <div
+          class="w-full bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-lg border border-slate-100 dark:border-slate-800 transition-colors duration-500 shrink-0"
+        >
+          <h3
+            class="text-3xl font-black text-slate-800 dark:text-slate-200 mb-4 border-b-2 border-slate-200 dark:border-slate-800 pb-2 uppercase tracking-widest"
+          >
+            Jadwal Hari Ini
+          </h3>
+          <ul class="space-y-2 text-3xl font-bold px-6" id="prayer-list">
+            <li
+              id="row-subuh"
+              class="flex justify-between p-4 rounded-xl transition-all text-slate-800 dark:text-slate-200"
+            >
+              <span>Subuh</span
+              ><span id="time-subuh" class="tabular-nums">--:--</span>
+            </li>
+            <li
+              id="row-dzuhur"
+              class="flex justify-between p-4 rounded-xl transition-all text-slate-800 dark:text-slate-200"
+            >
+              <span>Dzuhur</span
+              ><span id="time-dzuhur" class="tabular-nums">--:--</span>
+            </li>
+            <li
+              id="row-ashar"
+              class="flex justify-between p-4 rounded-xl transition-all text-slate-800 dark:text-slate-200"
+            >
+              <span>Ashar</span
+              ><span id="time-ashar" class="tabular-nums">--:--</span>
+            </li>
+            <li
+              id="row-maghrib"
+              class="flex justify-between p-4 rounded-xl transition-all text-slate-800 dark:text-slate-200"
+            >
+              <span>Maghrib</span
+              ><span id="time-maghrib" class="tabular-nums">--:--</span>
+            </li>
+            <li
+              id="row-isya"
+              class="flex justify-between p-4 rounded-xl transition-all text-slate-800 dark:text-slate-200"
+            >
+              <span>Isya</span
+              ><span id="time-isya" class="tabular-nums">--:--</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- KOTAK 2: KAJIAN RUTIN -->
+        <div
+          class="w-full bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-lg border border-slate-100 dark:border-slate-800 transition-colors duration-500 flex flex-col justify-between shrink-0"
+        >
+          <!-- Hapus mb-6 di sini -->
+          <h3
+            class="text-3xl font-black text-slate-800 dark:text-slate-200 border-b-2 border-slate-200 dark:border-slate-800 pb-2 uppercase tracking-widest"
+          >
+            Info Kajian Rutin
+          </h3>
+
+          <ul class="grid grid-cols-2 gap-8">
+            <!-- Kajian Mingguan (Kiri) -->
+            <li
+              class="flex flex-col justify-start border-l-4 border-masjid-gold pl-5"
+            >
+              <span
+                class="text-masjid-gold font-black text-3xl uppercase tracking-wider mb-1"
+                >Setiap Rabu</span
+              >
+              <span class="text-slate-800 dark:text-slate-200 text-2xl font-bold"
+                >Ba'da Maghrib - Isya'</span
+              >
+              <span
+                class="text-slate-500 dark:text-slate-400 text-2xl leading-snug mt-1"
+                >Kajian Rutin & Tanya Jawab Agama</span
+              >
+            </li>
+
+            <!-- Kajian Bulanan (Kanan) -->
+            <li
+              class="flex flex-col justify-start border-l-4 border-slate-300 dark:border-slate-700 pl-5"
+            >
+              <span
+                class="text-masjid-gold font-black text-3xl uppercase tracking-wider mb-1"
+                >Sebulan Sekali</span
+              >
+              <span class="text-slate-800 dark:text-slate-200 text-2xl font-bold"
+                >Setiap Sabtu ke-4</span
+              >
+              <span
+                class="text-slate-500 dark:text-slate-400 text-2xl leading-snug mt-1"
+                >Kajian Bulanan Rutin</span
+              >
+            </li>
+          </ul>
+        </div>
+
+        <!-- KOTAK 3: QRIS INFAQ -->
+        <!-- mt-8 telah dihancurkan. Biarkan gap-5 yang mengurus jaraknya -->
+        <div
+          class="flex flex-col items-center bg-white dark:bg-slate-900 p-6 rounded-3xl border-2 border-dashed border-masjid-gold/50 shadow-lg transition-colors duration-500 shrink-0"
+        >
+          <img
+            src="/img/sosmed.png"
+            alt="akun media sosial masjid"
+            class="w-58 h-58 bg-slate-100 dark:bg-slate-800 rounded-xl mb-4 flex items-center justify-center text-slate-400 font-bold text-center overflow-hidden shadow-inner"
+          />
+          <p
+            class="font-black text-[1.25rem] uppercase text-slate-900 dark:text-white tracking-wider"
+          >
+            Jangan Scan
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER: Running Text (Warna Dark Mode Diperbaiki, shrink-0 ditambahkan) -->
+    <footer
+      class="h-20 bg-slate-900 dark:bg-white text-white dark:text-black flex items-center overflow-hidden shrink-0 shadow-inner"
+    >
+      <div class="flex w-max animate-running-text">
+        <!-- BLOK 1 -->
+        <div class="whitespace-nowrap flex gap-12 text-3xl font-bold pr-12 shrink-0">
+          <span class="text-masjid-gold">PENGUMUMAN:</span>
+          <span>Mohon luruskan dan rapatkan shaf sebelum sholat dimulai</span>
+          <span class="text-slate-600">|</span>
+          <span>Pastikan ponsel dalam keadaan mati atau mode diam</span>
+          <span class="text-slate-600">|</span>
+          <span>Jagalah kebersihan lingkungan Masjid Al-Ukhuwah</span>
+          <span class="text-slate-600">|</span>
+          <span class="text-masjid-gold italic">"Barangsiapa membangun masjid karena Allah, maka Allah akan membangunkan untuknya rumah di surga." (HR. Bukhari & Muslim)</span>
+          <span class="text-slate-600">|</span>
+        </div>
+
+        <!-- BLOK 2 -->
+        <div class="whitespace-nowrap flex gap-12 text-3xl font-bold pr-12 shrink-0">
+          <span class="text-masjid-gold">PENGUMUMAN:</span>
+          <span>Mohon luruskan dan rapatkan shaf sebelum sholat dimulai</span>
+          <span class="text-slate-600">|</span>
+          <span>Pastikan ponsel dalam keadaan mati atau mode diam</span>
+          <span class="text-slate-600">|</span>
+          <span>Jagalah kebersihan lingkungan Masjid Al-Ukhuwah</span>
+          <span class="text-slate-600">|</span>
+          <span class="text-masjid-gold italic">"Barangsiapa membangun masjid karena Allah, maka Allah akan membangunkan untuknya rumah di surga." (HR. Bukhari & Muslim)</span>
+          <span class="text-slate-600">|</span>
+        </div>
+
+        <!-- BLOK 3 -->
+        <div class="whitespace-nowrap flex gap-12 text-3xl font-bold pr-12 shrink-0">
+          <span class="text-masjid-gold">PENGUMUMAN:</span>
+          <span>Mohon luruskan dan rapatkan shaf sebelum sholat dimulai</span>
+          <span class="text-slate-600">|</span>
+          <span>Pastikan ponsel dalam keadaan mati atau mode diam</span>
+          <span class="text-slate-600">|</span>
+          <span>Jagalah kebersihan lingkungan Masjid Al-Ukhuwah</span>
+          <span class="text-slate-600">|</span>
+          <span class="text-masjid-gold italic">"Barangsiapa membangun masjid karena Allah, maka Allah akan membangunkan untuknya rumah di surga." (HR. Bukhari & Muslim)</span>
+          <span class="text-slate-600">|</span>
+        </div>
+
+        <!-- BLOK 4 -->
+        <div class="whitespace-nowrap flex gap-12 text-3xl font-bold pr-12 shrink-0">
+          <span class="text-masjid-gold">PENGUMUMAN:</span>
+          <span>Mohon luruskan dan rapatkan shaf sebelum sholat dimulai</span>
+          <span class="text-slate-600">|</span>
+          <span>Pastikan ponsel dalam keadaan mati atau mode diam</span>
+          <span class="text-slate-600">|</span>
+          <span>Jagalah kebersihan lingkungan Masjid Al-Ukhuwah</span>
+          <span class="text-slate-600">|</span>
+          <span class="text-masjid-gold italic">"Barangsiapa membangun masjid karena Allah, maka Allah akan membangunkan untuknya rumah di surga." (HR. Bukhari & Muslim)</span>
+          <span class="text-slate-600">|</span>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/assets/js/main.js"></script>
+  </body>
+</html>

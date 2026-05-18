@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-masjid-gold: #F59E0B;
+  /* Tambahkan waktu menjadi 30s atau 40s agar tidak terlalu pusing dibaca */
+  --animate-running-text: running-text 75s linear infinite; 
+}
+
+@keyframes running-text {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-25%); } /* Geser tepat 1 dari 4 blok */
+}
