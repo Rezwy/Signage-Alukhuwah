@@ -15,7 +15,10 @@
   </head>
 
   <!-- h-[100dvh] mencegah terpotongnya UI di Android Box -->
-  <body class="bg-slate-50 text-slate-900 font-sans" style="font-family: 'Montserrat', sans-serif;">
+  <body
+    class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 h-[100dvh] w-screen overflow-hidden flex flex-col font-montserrat transition-colors duration-1000"
+    style="font-family: 'Montserrat', sans-serif;"
+  >
     <!-- min-h-0 menahan main agar tidak mendorong footer -->
     <main class="flex-grow grid grid-cols-12 gap-8 p-8 min-h-0">
       <!-- SISI KIRI: Zona Fokus (8 Kolom) -->
@@ -212,7 +215,7 @@
     <footer
       class="h-20 bg-slate-900 dark:bg-white text-white dark:text-black flex items-center overflow-hidden shrink-0 shadow-inner"
     >
-      <div class="flex w-max pb-8 animate-running-text">
+      <div class="flex w-max animate-running-text">
         <!-- BLOK 1 -->
         <div
           class="whitespace-nowrap flex gap-12 text-3xl font-bold pr-12 shrink-0"
