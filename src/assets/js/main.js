@@ -13,7 +13,16 @@ const SPREADSHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSk
 // ==========================================
 async function syncSaldo() {
   try {
-    const response = await fetch(`${SPREADSHEET_CSV_URL}&t=${new Date().getTime()}`);
+    // Memaksa request bypassing cache pada level browser header dan query parameter
+    const response = await fetch(`${SPREADSHEET_CSV_URL}&t=${new Date().getTime()}`, {
+      method: "GET",
+      headers: {
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0"
+      }
+    });
+    
     if (!response.ok) throw new Error("Gagal menarik data dari Google Sheets");
 
     const csvText = await response.text();
@@ -49,7 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // 2. Tarik Saldo Infaq untuk pertama kali
   syncSaldo();
 
-  // 3. Tarik data saldo baru setiap 15 Menit (900.000 ms)
+  // 3. Tarik data saldo baru setiap 5 Menit (300.000 ms) - OPTIMIZED
   setInterval(syncSaldo, 5 * 60 * 1000);
 
   // 4. Protokol Pembersihan Harian (Refresh paksa jam 01:00 Dini Hari)
