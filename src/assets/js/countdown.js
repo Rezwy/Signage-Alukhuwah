@@ -34,7 +34,7 @@ export function startCountdownEngine(timings) {
 
   setInterval(() => {
     const now = new Date();
-    now.setHours(now.getHours()); // Normalisasi ke detik penuh
+    now.setHours(15, 0, 0, 0); // Normalisasi ke detik penuh
     const nowMs = now.getTime();
 
     if (
