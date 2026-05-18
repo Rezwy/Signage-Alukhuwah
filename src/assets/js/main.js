@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   syncSaldo();
 
   // 3. Tarik data saldo baru setiap 15 Menit (900.000 ms)
-  setInterval(syncSaldo, 15 * 60 * 1000);
+  setInterval(syncSaldo, 5 * 60 * 1000);
 
   // 4. Protokol Pembersihan Harian (Refresh paksa jam 01:00 Dini Hari)
   setInterval(() => {
