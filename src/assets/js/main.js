@@ -6,42 +6,65 @@ import { startCountdownEngine } from "./countdown.js";
 // ==========================================
 // KONSTANTA GLOBAL
 // ==========================================
-const SPREADSHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSk2uSgP7O8r4bkc3tU93XodUZw26kSSFnsAST5lR0aRgr3dO-Ds_VJGjxPxeU-QA3NOD0JqPbUUvdp/pub?gid=0&single=true&output=csv";
+const SPREADSHEET_CSV_URL =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSk2uSgP7O8r4bkc3tU93XodUZw26kSSFnsAST5lR0aRgr3dO-Ds_VJGjxPxeU-QA3NOD0JqPbUUvdp/pub?gid=0&single=true&output=csv";
 
 // ==========================================
 // FUNGSI SINKRONISASI SALDO
 // ==========================================
+// ==========================================
+// FUNGSI SINKRONISASI SALDO (ANTI-CRASH)
+// ==========================================
 async function syncSaldo() {
   try {
-    // Memaksa request bypassing cache pada level browser header dan query parameter
-    const response = await fetch(`${SPREADSHEET_CSV_URL}&t=${new Date().getTime()}`, {
-      method: "GET",
-      headers: {
-        "Cache-Control": "no-cache, no-store, must-revalidate",
-        "Pragma": "no-cache",
-        "Expires": "0"
-      }
-    });
-    
+    const response = await fetch(
+      `${SPREADSHEET_CSV_URL}&t=${new Date().getTime()}`,
+      {
+        method: "GET",
+        headers: {
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          Pragma: "no-cache",
+          Expires: "0",
+        },
+      },
+    );
+
     if (!response.ok) throw new Error("Gagal menarik data dari Google Sheets");
 
     const csvText = await response.text();
-    const rows = csvText.split("\n");
-    const saldoRow = rows[0].split(",");
+    console.log("Raw CSV Data dari Sheets:", csvText); // Intip isi data di konsol
 
-    const rawSaldo = parseInt(saldoRow[1].replace(/\D/g, ""), 10);
-    if (isNaN(rawSaldo)) throw new Error("Format angka di Google Sheets salah");
+    // REGEX: Bersihkan semua teks, ambil hanya deretan angka murni yang tersisa di dokumen
+    const cleanNumbers = csvText.replace(/\D/g, "");
 
+    if (!cleanNumbers) {
+      throw new Error(
+        "Tidak ditemukan angka nominal sama sekali di Google Sheets Anda!",
+      );
+    }
+
+    const rawSaldo = parseInt(cleanNumbers, 10);
+
+    // Format menjadi Rupiah secara presisi
     const formattedSaldo = new Intl.NumberFormat("id-ID", {
       style: "currency",
       currency: "IDR",
       minimumFractionDigits: 0,
     }).format(rawSaldo);
 
-    document.getElementById("saldo-infaq").textContent = formattedSaldo;
-    console.log("Saldo disinkronkan:", formattedSaldo);
+    // Suntikkan ke layar UI TV
+    const saldoElement = document.getElementById("saldo-infaq");
+    if (saldoElement) {
+      saldoElement.textContent = formattedSaldo;
+      console.log("Saldo Berhasil Diperbarui:", formattedSaldo);
+    }
   } catch (error) {
     console.error("Sinkronisasi Saldo Gagal:", error);
+    // Jaring Pengaman: Jika gagal, jangan biarkan layar bertuliskan "memuat data..." selamanya
+    const saldoElement = document.getElementById("saldo-infaq");
+    if (saldoElement && saldoElement.textContent === "memuat data...") {
+      saldoElement.textContent = "Rp 0";
+    }
   }
 }
 
@@ -64,7 +87,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   // 4. Protokol Pembersihan Harian (Refresh paksa jam 01:00 Dini Hari)
   setInterval(() => {
     const now = new Date();
-    if (now.getHours() === 1 && now.getMinutes() === 0 && now.getSeconds() === 0) {
+    if (
+      now.getHours() === 1 &&
+      now.getMinutes() === 0 &&
+      now.getSeconds() === 0
+    ) {
       console.log("Pergantian hari terdeteksi. Memuat ulang sistem...");
       window.location.reload(true);
     }
