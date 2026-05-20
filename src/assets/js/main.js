@@ -37,26 +37,31 @@ async function syncSaldo() {
 }
 
 // ==========================================
-// ORKESTRASI UTAMA (Berjalan saat HTML selesai dimuat)
+// ORKESTRASI UTAMA (Tahan Banting & Paralel)
 // ==========================================
-document.addEventListener("DOMContentLoaded", async () => {
-  // 1. Inisialisasi Jadwal Sholat dari EQuran
-  const dailyTimings = await initSchedule();
-  if (dailyTimings) {
-    startCountdownEngine(dailyTimings);
-  }
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("Sistem Kiosk Dimulai...");
 
-  // 2. Tarik Saldo Infaq untuk pertama kali
+  // 1. JALUR JADWAL SHOLAT (Isolasi Asinkronus)
+  (async () => {
+    try {
+      const dailyTimings = await initSchedule();
+      if (dailyTimings) {
+        startCountdownEngine(dailyTimings);
+      }
+    } catch (error) {
+      console.error("Gagal memuat mesin jadwal sholat:", error);
+    }
+  })();
+
+  // 2. JALUR SALDO INFAQ (Jalan Mandiri, Tidak Menunggu Jadwal)
   syncSaldo();
-
-  // 3. Tarik data saldo baru setiap 15 Menit (900.000 ms)
   setInterval(syncSaldo, 5 * 60 * 1000);
 
-  // 4. Protokol Pembersihan Harian (Refresh paksa jam 01:00 Dini Hari)
+  // 3. JALUR PROTOKOL PEMBERSIHAN HARIAN
   setInterval(() => {
     const now = new Date();
     if (now.getHours() === 1 && now.getMinutes() === 0 && now.getSeconds() === 0) {
-      console.log("Pergantian hari terdeteksi. Memuat ulang sistem...");
       window.location.reload(true);
     }
   }, 1000);
