@@ -97,6 +97,9 @@ export function startCountdownEngine(timings) {
       return `${h_d} ${namaBulanIslam[h_m - 1]} ${h_y} H`;
     }
 
+    const hijriahDate = calculateHijriManual(now);
+    dateDisplay.textContent = `${masehiDate} | ${hijriahDate}`;
+
     // ==========================================
     // SENSOR DARK MODE OTOMATIS
     // ==========================================
