@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
       body.style.setProperty("color", "#0f172a", "important"); // text-slate-900
 
       if (teksSaldo) {
-        teksSaldo.style.setProperty("color", "#b45309", "important"); // Cokelat gelap kontras
+        teksSaldo.style.setProperty("color", "#fbbf24", "important"); // Cokelat gelap kontras
       }
 
       body.classList.remove("dark");
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
       body.style.setProperty("color", "#f8fafc", "important"); // text-slate-50
 
       if (teksSaldo) {
-        teksSaldo.style.setProperty("color", "#f59e0b", "important"); // Emas masjid
+        teksSaldo.style.setProperty("color", "#fbbf24", "important"); // Emas masjid
       }
 
       body.classList.add("dark");
