@@ -44,13 +44,11 @@ export function startCountdownEngine(timings) {
     }
 
     // 1. RENDER JAM RAKSASA UTAMA
-    // (DIAMBIL DARI KODE PENGGUNA)
     clockDisplay.textContent = now
       .toLocaleTimeString("id-ID", { hour12: false })
       .replace(/\./g, ":");
 
-    // 2. TENTUKAN TANGGAL MASEHI (UNTUK DOM)
-    // (DIAMBIL DARI KODE PENGGUNA DAN DIPERTAHANKAN)
+    // 2. RENDER TANGGAL MASEHI (Stabil & Tahan Banting)
     const optionsMasehi = {
       weekday: "long",
       day: "numeric",
@@ -59,55 +57,8 @@ export function startCountdownEngine(timings) {
     };
     const masehiDate = now.toLocaleDateString("id-ID", optionsMasehi);
 
-    // ==========================================
-    // 3. TENTUKAN TANGGAL HIJRIAH (MATEMATIKA CADANGAN ANTI-BUG)
-    // ==========================================
-    function calculateHijriManual(date) {
-      const namaBulanIslam = [
-        "Muharram", "Safar", "Rabi'ul Awwal", "Rabi'ul Akhir",
-        "Jumadil Awwal", "Jumadil Akhir", "Rajab", "Sya'ban",
-        "Ramadhan", "Syawwal", "Dzulqa'dah", "Dzulhijjah"
-      ];
-
-      let d = date.getDate();
-      let m = date.getMonth(); // 0-11
-      let y = date.getFullYear();
-
-      // Perhitungan dasar Julian Day
-      if (m < 2) {
-        y--;
-        m += 12;
-      }
-      let a = Math.floor(y / 100);
-      let b = 2 - a + Math.floor(a / 4);
-      let jd = Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 2)) + d + b - 1524;
-
-      // Koreksi manual hilal (Sesuaikan 1 atau 0 jika tanggal meleset di lapangan)
-      const KOREKSI_HARI = 0; 
-      jd += KOREKSI_HARI;
-
-      // Konversi Julian Day ke penanggalan Hijriah sipil
-      let z = jd - 1948440 + 10632;
-      let n = Math.floor((z - 1) / 10631);
-      z = z - 10631 * n;
-      let j = Math.floor((30 * z - 425) / 10629);
-      let h_y = 30 * n + j;
-      
-      z = z - Math.floor((10629 * j + 425) / 30);
-      let h_m = Math.floor((30 * z - 425) / 10629) + 1;
-      let h_d = z - Math.floor((10629 * (h_m - 1) + 425) / 30);
-
-      // Jaring pengaman jika hasil array di luar nalar peramban TV
-      if (h_m < 1 || h_m > 12 || isNaN(h_m)) {
-        return "5 Dzulhijjah 1447 H"; // Fallback tanggal saat ini jika crash
-      }
-
-      return `${h_d} ${namaBulanIslam[h_m - 1]} ${h_y} H`;
-    }
-
-    // PANGGIL FUNGSI DAN SUNTIK LANGSUNG KE DOM
-    const hijriahDate = calculateHijriManual(now);
-    dateDisplay.textContent = `${masehiDate} | ${hijriahDate}`;
+    // 3. TEMBAK LANGSUNG KE DOM
+    dateDisplay.textContent = masehiDate.toUpperCase();
 
     // ==========================================
     // SENSOR DARK MODE OTOMATIS
