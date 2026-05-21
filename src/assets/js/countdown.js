@@ -1,5 +1,3 @@
-// File: src/assets/js/countdown.js
-
 export function startCountdownEngine(timings) {
   const clockDisplay = document.getElementById("clock-display");
   const dateDisplay = document.getElementById("date-display");
@@ -45,11 +43,12 @@ export function startCountdownEngine(timings) {
       window.location.reload(true);
     }
 
-    // 1. RENDER JAM RAKSASA UTAMA
+    // 1. RENDER JAM RAKSASA UTAMA (Tetap Utuh)
     clockDisplay.textContent = now
       .toLocaleTimeString("id-ID", { hour12: false })
       .replace(/\./g, ":");
 
+    // 2. RENDER TANGGAL MASEHI (Tetap Utuh)
     const optionsMasehi = {
       weekday: "long",
       day: "numeric",
@@ -58,15 +57,54 @@ export function startCountdownEngine(timings) {
     };
     const masehiDate = now.toLocaleDateString("id-ID", optionsMasehi);
 
-    const optionsHijriah = { day: "numeric", month: "long", year: "numeric" };
-    let hijriahDate = now.toLocaleDateString(
-      "id-ID-u-ca-islamic",
-      optionsHijriah,
-    );
+    // ==========================================================
+    // 3. RENDER TANGGAL HIJRIAH (ALGORITMA MATEMATIKA MANDIRI - ANTI BUG TV)
+    // ==========================================================
+    function hitungHijriahManual(date) {
+      const namaBulanHijriah = [
+        "Muharram",
+        "Safar",
+        "Rabi'ul Awwal",
+        "Rabi'ul Akhir",
+        "Jumadil Awwal",
+        "Jumadil Akhir",
+        "Rajab",
+        "Sya'ban",
+        "Ramadhan",
+        "Syawwal",
+        "Dzulqa'dah",
+        "Dzulhijjah",
+      ];
 
-    hijriahDate = hijriahDate.replace(/ M| H/g, "") + " H";
+      let jd = Math.floor(date.getTime() / 86400000) + 2440588;
 
-    // Tembak langsung ke DOM
+      // Koreksi manual jika penanggalan hilal meleset 1-2 hari di lapangan
+      // Tambahkan nilai jika ingin memajukan hari, kurangi jika ingin memundurkan
+      const KOREKSI_HARI = 0;
+      jd += KOREKSI_HARI;
+
+      const l = jd - 1948440 + 10632;
+      const n = Math.floor((l - 1) / 10631);
+      const l2 = l - 10631 * n + 354;
+      const j =
+        Math.floor((10985 - l2) / 5316) * Math.floor((50 * l2 + 272) / 17652) +
+        Math.floor(l2 / 2451) * Math.floor((30 * l2 - 425) / 10629);
+      const l3 =
+        l2 -
+        Math.floor((10985 - j) / 5316) * Math.floor((50 * j + 272) / 17652) -
+        Math.floor(j / 2451) * Math.floor((30 * j - 425) / 10629);
+
+      const bulan = Math.floor((30 * l3 - 425) / 10629) + 1;
+      const hari = l3 - Math.floor((10629 * (bulan - 1) + 425) / 30);
+      const tahun = 30 * n + j - 30;
+
+      return `${hari} ${namaBulanHijriah[bulan - 1]} ${tahun} H`;
+    }
+
+    // Eksekusi fungsi mandiri kebal WebView
+    const hijriahDate = hitungHijriahManual(now);
+
+    // Tembak langsung ke DOM secara presisi
     dateDisplay.textContent = `${masehiDate} | ${hijriahDate}`;
 
     // ==========================================
