@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
       body.style.setProperty("color", "#0f172a", "important"); // text-slate-900
 
       if (teksSaldo) {
-        teksSaldo.style.setProperty("color", "#fbbf24", "important"); // Cokelat gelap kontras
+        teksSaldo.style.setProperty("color", "#f59e0b", "important"); // Cokelat gelap kontras
       }
 
       body.classList.remove("dark");
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
       body.style.setProperty("color", "#f8fafc", "important"); // text-slate-50
 
       if (teksSaldo) {
-        teksSaldo.style.setProperty("color", "#fbbf24", "important"); // Emas masjid
+        teksSaldo.style.setProperty("color", "#f59e0b", "important"); // Emas masjid
       }
 
       body.classList.add("dark");
@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 3. JALUR ENGINE REAL-TIME (Pemeriksaan Waktu & Pembersihan Harian)
   setInterval(() => {
     const now = new Date();
-    
+
     // Periksa dan paksakan tema setiap detik agar transisi mulus dan tepat waktu
     paksakanTemaSesuaiWaktu();
 
