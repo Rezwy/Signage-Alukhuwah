@@ -30,3 +30,24 @@
 .animate-highlight {
   animation: highlight-breathe 2.5s infinite ease-in-out;
 }
+
+/* ==========================================
+   ANIMASI ROTASI INFO BAWAH (SLIDE UP)
+========================================== */
+@keyframes slideUpEnter {
+  0% { transform: translateY(100%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideUpExit {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-100%); opacity: 0; }
+}
+
+.animate-slide-up-enter {
+  animation: slideUpEnter 1s ease-in-out forwards;
+}
+
+.animate-slide-up-exit {
+  animation: slideUpExit 1s ease-in-out forwards;
+}

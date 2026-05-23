@@ -32,7 +32,13 @@ async function syncSaldo() {
       minimumFractionDigits: 0,
     }).format(rawSaldo);
 
-    document.getElementById("saldo-infaq").textContent = formattedSaldo;
+    // [MODIFIKASI]: Targetkan kedua elemen saldo sekaligus
+    const saldoUtama = document.getElementById("saldo-infaq");
+    const saldoKlon = document.getElementById("saldo-infaq-clone");
+
+    if (saldoUtama) saldoUtama.textContent = formattedSaldo;
+    if (saldoKlon) saldoKlon.textContent = formattedSaldo;
+
     console.log("Saldo disinkronkan:", formattedSaldo);
   } catch (error) {
     console.error("Sinkronisasi Saldo Gagal:", error);
@@ -116,4 +122,42 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.reload(true);
     }
   }, 1000);
+  // ==========================================
+  // ROTASI KOTAK INFO BAWAH (10 Detik Slide Up)
+  // ==========================================
+  let isSaldoShowing = true;
+
+  // ==========================================
+  // ROTASI KOTAK INFO BAWAH (Infinite Scroll Ke Atas)
+  // ==========================================
+  const slider = document.getElementById("info-slider");
+
+  if (slider) {
+    const slideCount = slider.children.length; // Akan bernilai 5
+    let currentSlide = 0;
+
+    setInterval(() => {
+      currentSlide++;
+
+      // 1. Nyalakan transisi untuk pergerakan mulus ke atas
+      slider.style.transition = "transform 1s ease-in-out";
+
+      // 2. Kalkulasi pergeseran persentase
+      const percentage = -(currentSlide * (100 / slideCount));
+      slider.style.transform = `translateY(${percentage}%)`;
+
+      // 3. Jika ini adalah slide terakhir (Kloningan Slide 1)
+      if (currentSlide === slideCount - 1) {
+        // Tunggu 1 detik sampai animasi bergeser selesai sepenuhnya
+        setTimeout(() => {
+          // Matikan animasi secara instan
+          slider.style.transition = "none";
+
+          // Reset indeks dan posisi secara gaib tanpa disadari mata
+          currentSlide = 0;
+          slider.style.transform = `translateY(0%)`;
+        }, 1000); // 1000 ms harus sama dengan durasi transisi '1s' di atas
+      }
+    }, 6000); // Eksekusi setiap 3 Detik
+  }
 });

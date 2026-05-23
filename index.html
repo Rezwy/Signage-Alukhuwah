@@ -76,19 +76,80 @@
         </div>
 
         <div
-          class="mt-8 bg-white dark:bg-slate-900 px-10 py-5 rounded-3xl shadow-lg border border-slate-100 dark:border-slate-800 text-center transition-colors duration-500 flex flex-col items-center justify-center"
+          class="mt-8 bg-white dark:bg-slate-900 rounded-3xl shadow-lg border border-slate-100 dark:border-slate-800 text-center relative overflow-hidden h-56"
         >
-          <h4
-            class="text-[2.5rem] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1"
+          <div
+            id="info-slider"
+            class="flex flex-col w-full h-[500%]"
+            style="transform: translateY(0%)"
           >
-            Total Saldo Infaq Masjid
-          </h4>
-          <p
-            id="saldo-infaq"
-            class="text-6xl font-black text-masjid-gold tracking-tight"
-          >
-            Memuat data...
-          </p>
+            <div class="h-1/5 flex flex-col items-center justify-center px-10">
+              <h4
+                class="text-[2.5rem] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1"
+              >
+                Total Saldo Infaq Masjid
+              </h4>
+              <p
+                id="saldo-infaq"
+                class="text-6xl font-black text-masjid-gold tracking-tight"
+              >
+                Memuat data...
+              </p>
+            </div>
+
+            <div class="h-1/5 flex flex-col items-center justify-center px-10">
+              <h4
+                class="text-[2.5rem] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1"
+              >
+                Khotib Jumat Minggu Ini
+              </h4>
+              <p
+                class="text-6xl font-black text-masjid-gold tracking-tight leading-snug"
+              >
+                Ustadz Fulano
+              </p>
+            </div>
+
+            <div class="h-1/5 flex flex-col items-center justify-center px-10">
+              <h4
+                class="text-[2.5rem] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1"
+              >
+                Mubaligh Kajian Rabu Ganjil
+              </h4>
+              <p
+                class="text-6xl font-black text-masjid-gold tracking-tight leading-snug"
+              >
+                Ustadz Mbaref
+              </p>
+            </div>
+
+            <div class="h-1/5 flex flex-col items-center justify-center px-10">
+              <h4
+                class="text-[2.5rem] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1"
+              >
+                Mubaligh Kajian Rabu Genap
+              </h4>
+              <p
+                class="text-6xl font-black text-masjid-gold tracking-tight leading-snug"
+              >
+                Kyai Syaifudin Masykuri
+              </p>
+            </div>
+
+            <div class="h-1/5 flex flex-col items-center justify-center px-10">
+              <h4
+                class="text-[2.5rem] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1"
+              >
+                Total Saldo Infaq Masjid
+              </h4>
+              <p
+                id="saldo-infaq-clone"
+                class="text-6xl font-black text-masjid-gold tracking-tight"
+              >
+                Memuat data...
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
