@@ -4,6 +4,7 @@ export function startCountdownEngine(timings) {
   const countdownDisplay = document.getElementById("countdown-display");
   const nextPrayerLabel = document.getElementById("next-prayer-label");
   const countdownContainer = document.getElementById("countdown-container");
+  const jadwalTitle = document.getElementById("jadwal-title");
 
   // Fungsi helper mengubah "14:56" menjadi Date Object hari ini
   function parseTime(timeStr) {
@@ -11,6 +12,28 @@ export function startCountdownEngine(timings) {
     const now = new Date();
     now.setHours(parseInt(hours), parseInt(minutes), 0, 0);
     return now;
+  }
+
+  // ==========================================
+  // RENDER WAKTU IMSAK (Visual Saja, Tanpa Hitung Mundur)
+  // ==========================================
+  const imsakDisplay = document.getElementById("time-imsak");
+  if (imsakDisplay && timings.Imsak) {
+    // Memecah string jika API mengembalikan format "04:15 (WIB)"
+    const cleanImsak = timings.Imsak.split(" ")[0];
+
+    // Tambahkan offset 5 menit jika Anda menerapkan ihtiyati/koreksi waktu yang sama dengan Subuh
+    const [h, m] = cleanImsak.split(":");
+    const imsakDate = new Date();
+    imsakDate.setHours(parseInt(h), parseInt(m) + 5, 0, 0);
+
+    imsakDisplay.textContent = imsakDate
+      .toLocaleTimeString("id-ID", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      })
+      .replace(/\./g, ":");
   }
 
   // Bangun Array Prioritas
@@ -111,6 +134,8 @@ export function startCountdownEngine(timings) {
     // ==========================================
     // EDGE CASE: SETELAH ISYA (MALAM HARI)
     // ==========================================
+    let isJadwalBesok = false;
+
     if (!activePrayer) {
       activePrayer = schedule[0]; // Target Subuh
       currentPhase = "ADZAN"; // Kembalikan ke mode hitung mundur normal
@@ -119,6 +144,19 @@ export function startCountdownEngine(timings) {
       // Kalkulasi waktu Subuh untuk HARI ESOK (tambah 24 Jam)
       const besokSubuhMs = schedule[0].target.getTime() + 24 * 60 * 60 * 1000;
       timeDiff = besokSubuhMs - nowMs;
+
+      // Jika waktu ini terjadi sebelum jam 00:00 (misal 20:00 - 23:59)
+      // Maka secara teknis ini adalah jadwal untuk besok
+      if (now.getHours() !== 0) {
+        isJadwalBesok = true;
+      }
+    }
+
+    // Eksekusi perubahan teks Judul Tabel
+    if (jadwalTitle) {
+      jadwalTitle.textContent = isJadwalBesok
+        ? "JADWAL BESOK"
+        : "JADWAL HARI INI";
     }
 
     // ==========================================
@@ -218,16 +256,17 @@ export function startCountdownEngine(timings) {
 }
 
 // Fungsi memindahkan warna emas ke jadwal yang relevan
-// Fungsi ini HANYA memindahkan warna emas ke jadwal yang relevan di tabel kanan
 function updateHighlightUI(schedule, activeId) {
   schedule.forEach((p) => {
     const row = document.getElementById(`row-${p.id}`);
     if (row) {
+      // Hapus semua kelas aktif & animasi dari jadwal yang tidak relevan
       row.classList.remove(
         "bg-masjid-gold",
         "text-white",
         "shadow-md",
-        "scale-105",
+        "scale-101",
+        "animate-highlight",
       );
       row.classList.add("text-slate-800", "dark:text-slate-200");
     }
@@ -236,11 +275,11 @@ function updateHighlightUI(schedule, activeId) {
   const activeRow = document.getElementById(`row-${activeId}`);
   if (activeRow) {
     activeRow.classList.remove("text-slate-800", "dark:text-slate-200");
+    // Tambahkan kelas emas dan animasi custom
     activeRow.classList.add(
       "bg-masjid-gold",
-      "text-white",
-      "shadow-md",
-      "scale-105",
+      "text-black",
+      "animate-highlight",
     );
   }
 }

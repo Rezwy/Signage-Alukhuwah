@@ -12,3 +12,21 @@
   0% { transform: translateX(0); }
   100% { transform: translateX(-25%); } /* Geser tepat 1 dari 4 blok */
 }
+
+/* ==========================================
+   ANIMASI HIGHLIGHT JADWAL SHOLAT
+========================================== */
+@keyframes highlight-breathe {
+  0%, 100% {
+    transform: scale(1.05);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 10px 20px -3px rgba(245, 158, 11, 0.6); /* Cahaya glow emas */
+  }
+}
+
+.animate-highlight {
+  animation: highlight-breathe 2.5s infinite ease-in-out;
+}

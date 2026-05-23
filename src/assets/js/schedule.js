@@ -39,9 +39,9 @@ export async function initSchedule() {
             }
 
             // 4. PEMETAAN DATA (Adapter Pattern)
-            // Terjemahkan key bahasa Indonesia dari EQuran ke bahasa Inggris 
-            // agar logika countdown.js milikmu tidak hancur berkeping-keping.
+            // Menambahkan mapping untuk Imsak dari properti .imsak milik API EQuran
             const timings = {
+                Imsak: jadwalHariIni.imsak,
                 Fajr: jadwalHariIni.subuh,
                 Dhuhr: jadwalHariIni.dzuhur,
                 Asr: jadwalHariIni.ashar,
@@ -63,17 +63,24 @@ export async function initSchedule() {
         console.error("Gagal menarik data jadwal sholat:", error);
         
         // Render UI Darurat jika Kiosk menyala tapi WiFi masjid mati
+        if (document.getElementById('time-imsak')) document.getElementById('time-imsak').textContent = "--:--";
         document.getElementById('time-subuh').textContent = "--:--";
         document.getElementById('time-dzuhur').textContent = "--:--";
         document.getElementById('time-ashar').textContent = "--:--";
         document.getElementById('time-maghrib').textContent = "--:--";
         document.getElementById('time-isya').textContent = "--:--";
         
-        return null; // Kembalikan null agar main.js tahu harus mencoba lagi
+        return null; 
     }
 }
 
 function updateScheduleUI(timings) {
+    // Menembak data Imsak ke elemen HTML time-imsak
+    const imsakEl = document.getElementById('time-imsak');
+    if (imsakEl && timings.Imsak) {
+        imsakEl.textContent = timings.Imsak;
+    }
+    
     document.getElementById('time-subuh').textContent = timings.Fajr;
     document.getElementById('time-dzuhur').textContent = timings.Dhuhr;
     document.getElementById('time-ashar').textContent = timings.Asr;
