@@ -23,28 +23,32 @@
     <main class="flex-grow grid grid-cols-12 gap-8 p-8 min-h-0">
       <!-- SISI KIRI: Zona Fokus (8 Kolom) -->
       <section
-        class="col-span-8 flex flex-col justify-center items-center border-r-2 border-slate-200 dark:border-slate-800 pr-8 relative"
+        class="col-span-8 flex flex-col justify-end items-center pb-8 border-r-2 border-slate-200 dark:border-slate-800 pr-8 relative"
       >
-        <div class="absolute top-0 left-0 flex items-center gap-4">
-          <!-- PATH DIPERBAIKI. Pastikan logomu sudah format PNG transparan -->
+        <div class="flex-grow"></div>
+        <div class="flex items-center justify-center space-x-8 w-full">
           <img
-            src="/img/logoasli.png"
+            src="/img/logo.png"
             alt="Logo Masjid Al-Ukhuwah"
-            class="w-30 h-30 object-cover rounded-full shadow-md border-2 border-slate-200 dark:border-slate-800"
+            class="w-40 h-40 object-cover left-0 rounded-full shadow-md border-2 border-slate-200 dark:border-slate-800"
           />
-          <h1
-            class="text-5xl font-black uppercase tracking-tight leading-none text-slate-800 dark:text-slate-200"
-          >
-            Masjid Al-Ukhuwah<br />
-            <span class="text-masjid-gold text-4xl tracking-widest"
-              >Bonorejo</span
+
+          <div class="text-center">
+            <h1
+              class="text-[4.5rem] font-black uppercase tracking-tight leading-none text-slate-800 dark:text-slate-200"
             >
-          </h1>
+              Masjid Al-Ukhuwah<br />
+              <span
+                class="text-masjid-gold text-6xl tracking-widest leading-none"
+                >Bonorejo</span
+              >
+            </h1>
+          </div>
         </div>
 
         <h2
           id="clock-display"
-          class="text-[16rem] font-black leading-none tracking-tighter text-slate-900 dark:text-white mt-12 tabular-nums"
+          class="text-[16rem] font-black leading-none mt-8 tracking-tighter text-slate-900 dark:text-white mt-12 tabular-nums"
         >
           00:00:00
         </h2>
@@ -76,7 +80,7 @@
         </div>
 
         <div
-          class="mt-8 bg-white dark:bg-slate-900 rounded-3xl shadow-lg border border-slate-100 dark:border-slate-800 text-center relative overflow-hidden h-56"
+          class="mt-8 mb-2 bg-white dark:bg-slate-900 rounded-3xl shadow-lg border border-slate-100 dark:border-slate-800 text-center relative overflow-hidden h-56"
         >
           <div
             id="info-slider"
@@ -106,7 +110,7 @@
               <p
                 class="text-6xl font-black text-masjid-gold tracking-tight leading-snug"
               >
-                Ustadz Fulano
+                Ustadz Fauzi
               </p>
             </div>
 
@@ -119,7 +123,7 @@
               <p
                 class="text-6xl font-black text-masjid-gold tracking-tight leading-snug"
               >
-                Ustadz Mbaref
+                Kyai Syaifudin Masykuri
               </p>
             </div>
 
@@ -132,7 +136,7 @@
               <p
                 class="text-6xl font-black text-masjid-gold tracking-tight leading-snug"
               >
-                Kyai Syaifudin Masykuri
+                Ustadz Mbaref
               </p>
             </div>
 
@@ -165,7 +169,7 @@
           >
             Jadwal Hari Ini
           </h3>
-          <ul class="space-y-1 text-[2rem] font-bold px-6" id="prayer-list">
+          <ul class="space-y-0.3 text-[2.2rem] font-bold px-6" id="prayer-list">
             <li
               id="row-imsak"
               class="flex justify-between p-4 rounded-xl transition-all text-slate-800 dark:text-slate-200"
@@ -228,7 +232,7 @@
               class="flex flex-col justify-start border-l-4 border-masjid-gold pl-5"
             >
               <span
-                class="text-masjid-gold font-black text-3xl uppercase tracking-wider mb-1"
+                class="italic text-masjid-gold font-black text-4xl uppercase tracking-wider mb-1"
                 >Setiap Rabu</span
               >
               <span
@@ -246,7 +250,7 @@
               class="flex flex-col justify-start border-l-4 border-slate-300 dark:border-slate-700 pl-5"
             >
               <span
-                class="text-masjid-gold font-black text-3xl uppercase tracking-wider mb-1"
+                class="italic text-masjid-gold font-black text-4xl uppercase tracking-wider mb-1"
                 >Sebulan Sekali</span
               >
               <span
